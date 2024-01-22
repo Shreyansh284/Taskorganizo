@@ -41,31 +41,31 @@
                 </a>
             </li>
             <li class="">
-                <a href="{{ URL::to('/') }}/index" style="text-decoration: none">
+                <a wire:navigate href="{{ URL::to('/') }}/index" style="text-decoration: none">
                     <i class="bx bxs-dashboard"></i>
                     <span class="text">Inbox</span>
                 </a>
             </li>
             <li>
-                <a href="{{ URL::to('/') }}/today" style="text-decoration: none">
+                <a wire:navigate href="{{ URL::to('/') }}/today" style="text-decoration: none">
                     <i class='bx bxs-shopping-bag-alt'></i>
                     <span class="text">Today</span>
                 </a>
             </li>
             <li>
-                <a href="{{ URL::to('/') }}/upcoming" style="text-decoration: none">
+                <a  wire:navigatehref="{{ URL::to('/') }}/upcoming" style="text-decoration: none">
                     <i class='bx bxs-doughnut-chart'></i>
                     <span class="text">Upcoming</span>
                 </a>
             </li>
             <li>
-                <a href="{{ URL::to('/') }}/filterAndLabel" style="text-decoration: none">
+                <a wire:navigate href="{{ URL::to('/') }}/filterAndLabel" style="text-decoration: none">
                     <i class='bx bxs-message-dots'></i>
                     <span class="text">Fliter & Label</span>
                 </a>
             </li>
             <li>
-                <a href="{{ URL::to('/') }}/project" style="text-decoration: none">
+                <a wire:navigate href="{{ URL::to('/') }}/project" style="text-decoration: none">
                     <i class='bx bxs-group'></i>
                     <span class="text">Projects</span>
                 </a>
@@ -74,7 +74,7 @@
         <ul class="side-menu">
 
             <li>
-                <a href="{{ URL::to('/') }}/logout" class="logout" style="text-decoration: none">
+                <a wire:navigate href="{{ URL::to('/') }}/logout" class="logout" style="text-decoration: none">
                     <i class='bx bxs-log-out-circle'></i>
                     <span class="text">Logout</span>
                 </a>
@@ -89,12 +89,7 @@
         <!-- NAVBAR -->
         <nav>
             <i class='bx bx-menu'></i>
-            <form action="#">
-                <div class="form-input">
-                    <input type="search" placeholder="Search...">
-                    <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
-                </div>
-            </form>
+
 
             <a href="#" class="notification">
                 <i class='bx bxs-bell'></i>
@@ -105,9 +100,8 @@
             </a>
         </nav>
         <main>
-            @yield('link')
             <div class="modal fade" id="addtask" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="false">
+                aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -117,8 +111,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form method="POST"  id="addTaskForm" action="{{ URL::to('/') }}/tasks" class="register-form"
-                                id="login-form">
+                            <form method="POST" action="{{ URL::to('/') }}/tasks" class="register-form">
                                 @csrf
                                 <div class="form-group">
 
@@ -139,8 +132,6 @@
                                         @enderror
                                     </span>
                                 </div>
-
-
                                 <div class="form-group">
 
                                     <input type="date" class="form-control" id="recipient-name" name="due_date"
@@ -167,8 +158,8 @@
 
 
                                     <span>
-                                        @error('priority')
-                                            {{ $label->$message }}
+                                        @error('projectName')
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
@@ -209,15 +200,14 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-danger"  id="submitTaskBtn" ">Add</button>
+                            <button type="submit" class="btn btn-danger">Add</button>
                         </div>
                         </form>
 
                     </div>
                 </div>
             </div>
-
-       
+            @yield('link')
         </main>
     </section>
 
@@ -241,6 +231,12 @@
     <script src="/dashboard/script.js"></script>
     <script src="reg/vendor/jquery/jquery.min.js"></script>
     <script src="reg/js/main.js"></script>
+
+    {{-- <script>
+    window.addEventListener('hide',event =>{
+        $(#addProject).modal('hide');
+    })
+    </script> --}}
 
 </body>
 

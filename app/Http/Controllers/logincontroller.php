@@ -1,47 +1,25 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class logincontroller extends Controller
 {
-
     public function loginAuth(Request $requestLogin)
     {
-        $requestLogin->validate
-        (
-            [
-                'email' => 'required|email',
-                'password' => 'required',
-            ],
-            [
-                'email.required' => 'Email Field is required',
-            ],
-        );
+        $this->loginValidation($requestLogin);
+        $user = getUserByEmail($requestLogin->email);
 
-        $userDetails = logincontroller::getUserByEmail($requestLogin->email);
-
-        if ($userDetails != null) {
-            $checkPassword = Hash::check($requestLogin->password, $userDetails->password);
-            if ($checkPassword) {
-                session()->put('email', $requestLogin->email);
-                session()->flash('success', 'Logged In !!');
-                return redirect('index');
-            } else {
-                session()->flash('error', 'INVALID PASSWORD');
-                return redirect('login');
-            }
-        } else {
-            session()->flash('error', 'INVALID USER');
+        if($this->checkUser($requestLogin,$user))
+        {
+            return redirect('index');
+        }
+        else
+        {
             return redirect('login');
         }
     }
-
     public function logout()
     {
         session()->forget('email');
@@ -49,9 +27,50 @@ class logincontroller extends Controller
         return redirect('login');
     }
 
-
-    function getUserByEmail($email)
+    private function loginValidation(Request $request)
     {
-        return User::where('email', $email)->first();
+        return $request->validate
+        (
+            [
+                'email' => 'required|email',
+                'password' => 'required',
+            ],
+        );
+
+    }
+
+    private function checkUser($requestLogin,$user )
+    {
+        if($user == null)
+        {
+            session()->flash('error', 'INVALID USER');
+            return false;
+        }
+
+        if($this->checkPassword($requestLogin,$user))
+        {
+            session()->flash('success', 'Logged In !!');
+            return true;
+        }
+        else
+        {
+            session()->flash('error', 'INVALID PASSWORD');
+            return false;
+        }
+    }
+    private function checkPassword($requestLogin,$user)
+    {
+        $checkPassword = Hash::check($requestLogin->password, $user->password);
+        if ($checkPassword)
+        {
+            session()->put('email', $requestLogin->email);
+
+             return true;
+        }
+        else
+        {
+            return false;
+        }
+
     }
 }

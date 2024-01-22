@@ -11,8 +11,8 @@ class labelcontroller extends Controller
 {
     public function addLabel(Request $request)
     {
-        $userEmail = session()->get('email');
-        $user = $this->getUserByEmail($userEmail);
+        $email = session()->get('email');
+        $user = getUserByEmail($email);
 
         $label = new label;
         $label->user_id = $user->id;
@@ -21,9 +21,10 @@ class labelcontroller extends Controller
 
         return redirect('filterAndLabel');
     }
-    static function getLabelsByEmail($email)
+    static public  function getLabelsByEmail($email)
     {
-        $user = User::where('email', $email)->first();
+        $user = getUserByEmail($email);
+
         $labels = label::where('user_id', $user->id)->get("label_name");
         return with($labels);
     }
@@ -46,10 +47,4 @@ class labelcontroller extends Controller
             return response()->json(['message' => 'NOT FOUND'], 404);
         }
     }
-    private function getUserByEmail($email)
-    {
-        return User::where('email', $email)->first();
-    }
-
-
 }

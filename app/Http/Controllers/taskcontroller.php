@@ -12,14 +12,10 @@ use stdClass;
 
 class taskcontroller extends Controller
 {
-
-
-
-
-    function addTask(Request $request)
+        function addTask(Request $request)
     {
-            $userEmail = session()->get('email');
-        $user = $this->getUserByEmail($userEmail);
+        $email = session()->get('email');
+        $user = getUserByEmail($email);
         $project = $this->getProjectByProjectName($request->projectName, $user->id);
         $label = $this->getLabelByLabelName($request->labelName, $user->id);
 
@@ -48,13 +44,11 @@ class taskcontroller extends Controller
             session()->flash('error', 'Error Occured While Adding Task');
             return back();
         }
-
-
     }
 
     static function getTasksByEmail($email)
     {
-        $user = User::where('email', $email)->first();
+        $user = getUserByEmail($email);
 
         return taskcontroller::getTasksByUserId($user->id);
     }
@@ -69,7 +63,7 @@ class taskcontroller extends Controller
     function getTasksByPriority(Request $request, $priority)
     {
         $email = session()->get('email');
-        $user = $this->getUserByEmail($email);
+        $user = getUserByEmail($email);
         $userTasks = task::where('user_id', $user->id)->where('priority', $priority)->get();
 
         $tasks = taskcontroller::addTaskFields($userTasks,null,null);
@@ -79,7 +73,7 @@ class taskcontroller extends Controller
     public function getTasksByProjects(Request $request, $projectName)
     {
         $email = session()->get('email');
-        $user = $this->getUserByEmail($email);
+        $user = getUserByEmail($email);
         $project = $this->getProjectByProjectName($projectName, $user->id);
         $userTasks = task::where('user_id', $user->id)->where('project_id', $project->id)->get();
 
@@ -91,7 +85,7 @@ class taskcontroller extends Controller
     public function getTasksByLabels(Request $request, $labelName)
     {
         $email = session()->get('email');
-        $user = $this->getUserByEmail($email);
+        $user = getUserByEmail($email);
         $label = $this->getLabelByLabelName($labelName, $user->id);
 
         $userTasks = task::where('user_id', $user->id)->where('label_id', $label->id)->get();
@@ -100,8 +94,6 @@ class taskcontroller extends Controller
 
         return view('tasksByLabel')->with('tasks', $tasks);
     }
-
-
     function updateTask(Request $request, $user_id, $id)
     {
         $task = task::where('id', $id)->where('user_id', $user_id)->update(['task_name' => $request->task_name, 'task_description' => $request->task_description, 'due_date' => $request->due_date, 'priority' => $request->priority]);
@@ -111,7 +103,6 @@ class taskcontroller extends Controller
             return response()->json(['message' => 'NOT FOUND'], 404);
         }
     }
-
     function deleteTask(Request $request, $user_id, $id)
     {
         $deleteTask = task::where('id', $id)->where('user_id', $user_id)->delete();
@@ -123,11 +114,6 @@ class taskcontroller extends Controller
         }
     }
 
-
-    private function getUserByEmail($email)
-    {
-        return User::where('email', $email)->first();
-    }
     private function getProjectByProjectName($projectName, $userId)
     {
         return project::where('project_name', $projectName)->where('user_id', $userId)->first();
@@ -160,18 +146,13 @@ class taskcontroller extends Controller
 
     static private function transformTaskModel($newObject,$task,$projectName,$labelName)
     {
-
-
-
         $taskToArray = $task->toArray();
         //ADDING TASK FIELDS WITHOUT PROJECT_ID AND LABEL_ID
         foreach ($taskToArray as $key => $value)
         if ($key !== 'project_id' && $key !== 'label_id') {
             $newObject->$key = $value;
         }
-
         // ADDING PROJECTNAME IF AVILABLE ELSE IF FETCHING IT FROM DATABASE
-
         if($projectName!=null)
         {
             $newObject->projectName=$projectName;
@@ -183,11 +164,8 @@ class taskcontroller extends Controller
             {
             $newObject->projectName = $project->project_name;
             }
-
         }
-
          // ADDING LABELNAME IF AVILABLE ELSE IF FETCHING IT FROM DATABASE
-
         if($labelName!==null)
         {
             $newObject->labelName=$labelName;

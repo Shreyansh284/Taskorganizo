@@ -14,32 +14,20 @@ class projectcontroller extends Controller
 {
     public function addProject(Request $request)
     {
-        $userEmail = session()->get('email');
-        $user = projectcontroller::getUserByEmail($userEmail);
+        $email = session()->get('email');
+        $user = getUserByEmail($email);
 
-
-        $validator = Validator::make($request->all(), [
-            'project_name' => 'required|unique:projects,project_name,user_id'.$user->id,
-            // Add validation rules for other fields
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-
+        $project= new project;
+        $project->user_id = $user->id;
+        $project->project_name=$request->project_name;
+        if($project->save())
+        {
+            return redirect('project');
         }
-
-
-                $project= new project;
-                $project->user_id = $user->id;
-                $project->project_name=$request->project_name;
-                if($project->save())
-                {
-                return redirect('project');
-                }
     }
     static function getProjectsByEmail($email)
     {
-        $user=User::where('email',$email)->first();
+        $user = getUserByEmail($email);
         $projects = project::where('user_id', $user->id)->get("project_name");
         return with($projects);
     }
@@ -65,9 +53,6 @@ class projectcontroller extends Controller
             return response()->json(['message' => 'NOT FOUND'], 404);
         }
     }
-    private  function getUserByEmail($email)
-    {
-        return DB::table('users')->where('email', $email)->first();
-    }
+
 
 }

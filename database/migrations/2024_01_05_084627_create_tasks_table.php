@@ -18,10 +18,10 @@ return new class extends Migration
             $table->unsignedBigInteger('label_id')->nullable(true);
 
             $table->string('task_name');
-            $table->string('task_description');
+            $table->string('task_description')->nullable(true);
             $table->date('due_date')->nullable(true);
             $table->enum('priority', ['low', 'medium', 'high'])->default('low');
-            $table->string('status')->default('not_completed');
+            $table->boolean('completed')->default(false);
             $table->timestamps();
 
             $table->foreign('user_id')

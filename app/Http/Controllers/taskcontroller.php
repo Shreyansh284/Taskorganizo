@@ -12,7 +12,7 @@ use stdClass;
 
 class taskcontroller extends Controller
 {
-        function addTask(Request $request)
+    function addTask(Request $request)
     {
         $email = session()->get('email');
         $user = getUserByEmail($email);

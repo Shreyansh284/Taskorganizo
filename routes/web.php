@@ -5,6 +5,8 @@ use App\Http\Controllers\logincontroller;
 use App\Http\Controllers\projectcontroller;
 use App\Http\Controllers\taskcontroller;
 use App\Http\Controllers\usercontroller;
+use App\Livewire\Inbox;
+use App\Livewire\Projects;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +28,8 @@ Route::get('/', function () {
 Route::view('register','register');
 Route::view('login','login');
 
+// Route::get('index',Inbox::class);
+
 Route::post('loginAuth',[logincontroller::class, 'loginAuth']);
 Route::post('users',[usercontroller::class, 'addUser']);
 
@@ -37,7 +41,13 @@ Route::middleware(['login'])->group(function () {
     Route::view('upcoming','upcoming');
     Route::view('filterAndLabel','filterAndLabel');
     Route::view('project','project');
+    Route::view('completed','completed');
+    // Route::get('project',[Projects::class]);
     Route::view('master','master');
+
+    Route::view('second', 'second');
+    Route::view('extended-dropdown', 'extended-dropdown');
+
 
 
     Route::get('users/{email}/tasks',[taskcontroller::class, 'getTasksByEmail']);

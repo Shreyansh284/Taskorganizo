@@ -1,107 +1,111 @@
 <div>
-    <div id="basicsAccordion3">
-        <div class="card mb-3">
-            <div class="card-header card-collapse" id="basicsHeadingOne">
-              <h5 class="mb-0">
-                <button class="btn btn-block d-flex justify-content-between card-btn p-3"
-                        data-toggle="collapse"
-                        data-target="#basicsCollapseOne3"
-                        aria-expanded="true"
-                        aria-controls="basicsCollapseOne">
-                      <strong style="color: rgb(184, 35, 35); text-decoration:none;" class="completed" >FILTERS</strong>
-                      <i class='bx bx-filter' ></i>
-                </button>
-              </h5>
+          <div class="table-data">
+            <div class="todo">
+                <div class="head ">
+                    <div class="flex-grow-1">
+                        <button class="btn justify-content-between p-3"  data-bs-toggle="collapse" data-bs-target="#priorityCollapse" aria-expanded="false" aria-controls="priorityCollapse" >
+                              <strong style="color: rgb(184, 35, 35); text-decoration:none;" class="completed " >FILTER</strong>
+                            </button>
+                        </div>
+                        <div class= "justify-content-between p-3"><i class="bi bi-filter" style="color: brown"></i></div>
+                </div>
+
+                <div id="priorityCollapse" class="collapse mt-3">
+
+                <ul class="todo-list">
+                    <li class="high shadow ">
+                        <a  wire:navigate href="{{ URL::to('/') }}/filter/priority/high" style="color:rgb(76, 76, 76) " >  <strong>High Priority</strong>    </a>
+                    </li>
+                    <li class="medium shadow ">
+                        <a  wire:navigate href="{{ URL::to('/') }}/filter/priority/medium"  style=" color:rgb(76, 76, 76) " >  <strong>Medium Priority</strong>    </a>
+                    </li>
+                    <li  class="low shadow ">
+                        <a  wire:navigate href="{{ URL::to('/') }}/filter/priority/low" style=" color:rgb(76, 76, 76) " >  <strong>Low Priority</strong>    </a>
+                    </li>
+                </ul>
             </div>
-            <div id="basicsCollapseOne3" class="collapse show"
-                 aria-labelledby="basicsHeadingOne"
-                 data-parent="#basicsAccordion3">
-                 <div class="table-data">
-                    <div class="todo">
-                        <ul class="todo-list">
-                            <li class="high">
-                                <a href="{{ URL::to('/') }}/filter/priority/high" style="text-decoration: none; color:rgb(76, 76, 76) " >  <strong>High Priority</strong>    </a>
-                            </li>
-                            <li class="medium">
-                                <a href="{{ URL::to('/') }}/filter/priority/medium"  style="text-decoration: none; color:rgb(76, 76, 76) " >  <strong>Medium Priority</strong>    </a>
-                            </li>
-                            <li class="low">
-                                <a href="{{ URL::to('/') }}/filter/priority/low" style="text-decoration: none; color:rgb(76, 76, 76) " >  <strong>Low Priority</strong>    </a>
-                            </li>
-                        </ul>
+            </div>
+            </div>
+
+
+     <div class="table-data" >
+        <div class="todo">
+            <div class="head">
+                <div class="flex-grow-1">
+                    <button class="btn justify-content-between p-3"  data-bs-toggle="collapse" data-bs-target="#label1Collapse" aria-expanded="false" aria-controls="label1Collapse" >
+                          <strong style="color: rgb(184, 35, 35); text-decoration:none;" class="completed" >LABELS</strong>
+                        </button wire:ignore.self>
                     </div>
-                 </div>
+
+                    <div class= "justify-content-between p-3"><a  data-bs-toggle="modal" data-bs-target="#addLabel"> <i class="bi-plus-circle-fill" style="color: brown"></i></a></div>
+
             </div>
-          </div>
+
+            <div id="label1Collapse" class="collapse mt-3" wire:ignore.self>
+                @if($labels!="[]")
+                <ul class="todo-list">
+                    @foreach ($labels as $label )
+                    <li class="high shadow >
+                        <a  wire:navigate href="{{ URL::to('/') }}/label/{{$label->label_name}}" style=" color:rgb(76, 76, 76) " >  <strong>{{$label->label_name}}</strong>    </a>
+                          <div class="dropdown">
+                            <a style="text-decoration: none ;style:brown"  data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-three-dots"></i>
+                            </a>
+                            <ul class="dropdown-menu shadow border border-0">
+                              <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#editProject{{$label->label_name}}">Edit</a>
+                              <a class="dropdown-item" wire:click="deleteLabel({{$label->id}})" >Delete</a>
+                            </ul>
+                          </div>
+                    </li>
+
+               @endforeach
+            </ul>
+            @endif
+        </div>
+        </div>
         </div>
 
 
-    <div id="basicsAccordion1">
-      <div class="card mb-3">
-        <div class="card-header card-collapse" id="basicsHeadingOne">
-          <h5 class="mb-0">
-            <button class="btn btn-block d-flex justify-content-between card-btn p-3"
-                    data-toggle="collapse"
-                    data-target="#basicsCollapseOne1"
-                    aria-expanded="true"
-                    aria-controls="basicsCollapseOne">
-                  <strong style="color: rgb(184, 35, 35); text-decoration:none;" >LABELS</strong>
+          <div wire:ignore.self class="modal fade border-0" id="addLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Add Label</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" wire:submit="addLabel">
+                        @csrf
+                        <div class="form-group">
+                            <input  wire:model="label_name"  type="text" class="form-control" id="recipient-name "
+                                placeholder="Label Name" required>
+                            <span>
+                                @error('label_name')
+                                    {{ $message }}
+                                @enderror
+                            </span>
+                        </div>
 
-                  <a data-toggle="modal" data-target="#addlabel"  style="text-decoration: none"> <strong><i class='bx bx-plus'></strong></i></a>
-            </button>
-          </h5>
-        </div>
-        <div id="basicsCollapseOne1" class="collapse show"
-             aria-labelledby="basicsHeadingOne"
-             data-parent="#basicsAccordion1">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Add Label</button>
+                </div>
+                </form>
 
-             @if($labels!="[]")
-                @foreach ($labels as $label )
-                <div class="table-data">
-                    <div class="todo">
-                        <ul class="todo-list">
-                            <li class="high">
-                                <a href="{{ URL::to('/') }}/label/{{$label->label_name}}" style="text-decoration: none; color:rgb(76, 76, 76) " >  <strong>{{$label->label_name}}</strong>    </a>
-                            </li>
-                        </ul>
-                    </div>
-                 </div>
-                @endforeach
-                @endif
-      </div>
-      </div>
+                </div>
 
-
-<div class="modal fade" id="addlabel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Add Label</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form method="POST"  action="{{ URL::to('/') }}/labels" class="register-form" id="login-form">
-              @csrf
-            <div class="form-group">
-              <input type="text" class="form-control"  id="recipient-name" placeholder="Label Name" name="label_name" required >
-              <span>
-                  @error('label_name')
-              {{$message}}
-                  @enderror
-              </span>
+              </div>
             </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-danger">Add</button>
         </div>
+        <script>
+            document.addEventListener('livewire:initialized',()=>{
+                @this.on('closeModal',(event)=>{
 
-      </form>
-      </div>
-    </div>
-  </div>
+                    var mymodal=document.querySelector('#addLabel')
+                    var modal=bootstrap.Modal.getOrCreateInstance(mymodal)
+                    modal.hide();
+                })
+            })
+        </script>
 
-</div>

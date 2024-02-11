@@ -1,5 +1,4 @@
 @extends('master')
 @section('link')
-@livewire('search')
-
+@livewire('inbox')
 @endsection

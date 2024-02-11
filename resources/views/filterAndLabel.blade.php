@@ -1,4 +1,4 @@
 @extends('master')
 @section('link')
-  @livewire('filtersAndLabels')
+  @livewire('filters-and-labels')
 @endsection

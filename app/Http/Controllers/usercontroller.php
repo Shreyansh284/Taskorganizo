@@ -34,7 +34,7 @@ class usercontroller extends Controller
         $user->password = $requestUser->password;
         $user->save();
 
-        return redirect('login');
+        return redirect('index');
     }
     public function updateUser(Request $request, $id)
     {
@@ -49,7 +49,6 @@ class usercontroller extends Controller
     {
 
         $user = DB::table('users')->where('id', $id)->delete();
-
         if ($user) {
             return response()->json(['message' => 'USER Deleted'], 200);
         } else {

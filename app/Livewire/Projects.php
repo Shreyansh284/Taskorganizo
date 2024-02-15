@@ -13,11 +13,9 @@ class Projects extends Component
 {
     public $project_name;
     public $edit_project_name;
-
-
+    public $project_id;
     public function addProject(Request $request)
     {
-        // dd($this->project_name);
         $email = session()->get('email');
         $user = getUserByEmail($email);
         $this->validate([
@@ -36,15 +34,24 @@ class Projects extends Component
     {
         project::where('id', $id)->delete();
     }
+
     public function editProject($id)
     {
-
-        project::where('id',$id)->update(['project_name'=>$this->edit_project_name]);
+        $project = project::where('id', $id)->first();
+        if ($project) {
+            $this->project_id = $project->id;
+            $this->project_name = $project->project_name;
+        }
     }
-    public function redirectToProjectTasks($project_name)
+    public function updateProject()
     {
-        // Redirect to the ProjectTasks Livewire component with the project ID
-        return redirect()->to("/projects/$project_name");
+
+        $email = session()->get('email');
+        $user = getUserByEmail($email);
+        $this->validate([
+            'project_name' => 'required|unique:projects,project_name,NULL,id,user_id,' . $user->id,
+        ]);
+        project::where('id', $this->project_id)->update(['project_name' => $this->project_name]);
     }
     public function render()
     {

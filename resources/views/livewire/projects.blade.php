@@ -19,47 +19,48 @@
                                             <i class="bi bi-three-dots  "></i>
                                         </a>
                                         <ul class="dropdown-menu shadow border border-0">
-                                        <a class="dropdown-item " data-bs-toggle="modal" href="#editProject{{$project->id}}" >Edit  </a>
+                                        <a class="dropdown-item " data-bs-toggle="modal" data-bs-target="#editProject"  wire:click="editProject({{$project->id}})" >Edit  </a>
                                         <a class="dropdown-item" wire:click="deleteProject({{$project->id}})" >Delete</a>
                                         </ul>
                                     </div>
                             </li>
-                            <div wire:ignore.self class="modal fade" id="editProject{{$project->id}}" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="">Edit Project</h1>
-                                            <button type="button" class="btn-close"data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form wire:submit="editProject({{$project->id}})" >
-                                                <div class="form-group">
-                                                    <input wire:modal="edit_project_name" type="text" class="form-control"
-                                                        value="{{$project->project_name}}"  required>
-                                                    <span>
-                                                        @error('project_name')
-                                                            {{ $message     }}
-                                                        @enderror
-                                                    </span>
-                                                </div>
 
-                                                <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-danger" >Edit</button>
-                                                    <button type="button" class="btn btn-secondary"data-bs-dismiss="modal">Close</button>
-                                                </div>
-                                            </form>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                            </div>
                         @endforeach
                     @endif
                 </ul>
             </div>
         </div>
+    </div>
+    <div wire:ignore.self class="modal fade" id="editProject" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="">Edit Project</h1>
+                    <button type="button" class="btn-close"data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form wire:submit="updateProject" >
+                        <div class="form-group">
+                            <input wire:model="project_name" type="text" class="form-control"
+                                required>
+                            <span>
+                                @error('project_name')
+                                    {{ $message     }}
+                                @enderror
+                            </span>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-danger" >Edit</button>
+                            <button type="button" class="btn btn-secondary"data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+
     </div>
 
     <div wire:ignore.self class="modal fade" id="addProject" aria-hidden="true">

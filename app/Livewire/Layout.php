@@ -8,33 +8,29 @@ use App\Models\task;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Illuminate\Http\Request;
+
 class Layout extends Component
 {
     public $task_name;
     public $task_description;
     public $due_date;
     public $priority;
-    public $projectName;
-    public $labelName;
+    public $projectId;
+    public $labelId;
 
     public function addTask(Request $request)
     {
         $email = session()->get('email');
         $user = getUserByEmail($email);
-        $project = $this->getProjectByProjectName($this->projectName, $user->id);
-        $label = $this->getLabelByLabelName($this->labelName, $user->id);
-
-
-            // dd($this->task_name);
         $task = new task;
         $task->user_id = $user->id;
-        if ($this->projectName!==null) {
-            $task->project_id = $project->id;
+        if ($this->projectId !== null) {
+            $task->project_id = $this->projectId;
         } else {
             $task->project_id = null;
         }
-        if ($this->labelName!==null) {
-            $task->label_id = $label->id;
+        if ($this->labelId !== null) {
+            $task->label_id = $this->labelId;
         } else {
             $task->label_id = null;
         }
@@ -48,21 +44,13 @@ class Layout extends Component
         $this->dispatch('taskAdded');
         $this->dispatch('closeTaskModal');
     }
-    public function getProjectByProjectName($projectName, $userId)
-    {
-        return project::where('project_name', $projectName)->where('user_id', $userId)->first();
-    }
-    public function getLabelByLabelName($labelName, $userId)
-    {
-        return label::where('label_name', $labelName)->where('user_id', $userId)->first();
-    }
     public function render()
     {
-        $email=session()->get('email');
+        $email = session()->get('email');
         $user = getUserByEmail($email);
-        $projects = project::where('user_id', $user->id)->get("project_name");
-        $labels = label::where('user_id', $user->id)->get("label_name");
+        $projects = project::where('user_id', $user->id)->get();
+        $labels = label::where('user_id', $user->id)->get();
 
-        return view('livewire.layout',['projects'=>$projects,'labels'=>$labels]);
+        return view('livewire.layout', ['projects' => $projects, 'labels' => $labels]);
     }
 }

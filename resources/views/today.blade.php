@@ -1,5 +1,5 @@
 
 @extends('master')
 @section('link')
-@livewire('today-tasks')
+@livewire('inbox', ['taskType' => 'today'])
 @endsection

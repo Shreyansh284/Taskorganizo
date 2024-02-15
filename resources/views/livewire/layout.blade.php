@@ -1,3 +1,4 @@
+<div>
 <div wire:ignore.self class="modal fade" id="addTask" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -36,12 +37,12 @@
                             @enderror
                         </span>
                     </div>
-                    <div  wire:model="projectName"  class="form-group">
+                    <div  wire:model="projectId"  class="form-group">
                         <select class="form-select" aria-label="Default select example" name="projectName">
                             <option value="{{ null }}">Choose Project</option>
                             @if ($projects != '[]')
                                 @foreach ($projects as $project)
-                                    <option value="{{ $project->project_name }}">
+                                    <option value="{{ $project->id }}">
                                         {{ $project->project_name }}</option>
                                 @endforeach
                             @endif
@@ -49,6 +50,22 @@
 
                         <span>
                             @error('projectName')
+                                {{ $message }}
+                            @enderror
+                        </span>
+                    </div>
+                    <div  wire:model="labelId"  class="form-group">
+                        <select class="form-select" aria-label="Default select example" name="labelName">
+                            <option value="{{ null }}">Choose Label</option>
+                            @if ($labels != '[]')
+                                @foreach ($labels as $label)
+                                    <option value="{{ $label->id }}">{{ $label->label_name }}
+                                    </option>
+                                @endforeach
+                            @endif
+                        </select>
+                        <span>
+                            @error('label')
                                 {{ $message }}
                             @enderror
                         </span>
@@ -67,22 +84,7 @@
                         </span>
                     </div>
 
-                <div  wire:model="labelName"  class="form-group">
-                    <select class="form-select" aria-label="Default select example" name="labelName">
-                        <option value="{{ null }}">Choose Label</option>
-                        @if ($labels != '[]')
-                            @foreach ($labels as $label)
-                                <option value="{{ $label->label_name }}">{{ $label->label_name }}
-                                </option>
-                            @endforeach
-                        @endif
-                    </select>
-                    <span>
-                        @error('label')
-                            {{ $message }}
-                        @enderror
-                    </span>
-                </div>
+
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -94,6 +96,8 @@
 
         </div>
     </div>
+</div>
+
 
 </div>
 

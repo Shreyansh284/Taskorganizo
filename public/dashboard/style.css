@@ -170,7 +170,33 @@ a{
     color: #2a8520;
     border: 2px solid rgb(55, 120, 29);
 }
+.custom-danger   
+{
+  border-color: #a12c28;
+}
+/* #sidebar {
+    display: none;
+} */
 
+/* Show the sidebar on larger screens (desktop)
+@media (min-width: 992px) {
+    #sidebar {
+        display: block;
+    }
+}
+
+/* Style for the toggle button on small screens */
+/* #sidebar-toggle {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 999;
+}
+
+/* Add this CSS to show/hide the sidebar when the .active class is present */
+/* #sidebar.active {
+    display: block;
+} */
 /* SIDEBAR */
 #sidebar {
 	position: fixed;

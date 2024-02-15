@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Livewire;
+
 use App\Models\label;
 use App\Models\project;
 use App\Models\task;
+use App\Traits\TaskEditDeleteTrait;
 use Illuminate\Support\Carbon;
 
 use Livewire\Attributes\On;
@@ -11,40 +13,29 @@ use Livewire\Component;
 
 class TodayTasks extends Component
 {
-    public $getTasks;
-    public function deleteTask($id)
-    {
-        task::where('id', $id)->delete();
-    }
+    use TaskEditDeleteTrait;
+    public $searchedTasks;
 
-    public function toggle($id)
-    {
-
-        $task=task::where('id',$id)->first();
-        $task->completed = !$task->completed;
-        $task->save();
-
-    }
     #[On('taskAdded')]
-
-
     public function render()
     {
-        
+
         $user = getUserByEmail(session()->get('email'));
-     $todayTasks=task::where('user_id',$user->id)->where('completed','0')->where('due_date',today())
-        ->where(function ($query)
-        {
-            $query->where('task_name', 'like', '%' . $this->getTasks . '%')
-                ->orwhere('priority','like','%'.$this->getTasks.'%');
-        })->latest()->get();
+        $todayTasks =getTasksWhereDueDateIsToday($user->id);
+        getFormetedDuedate($todayTasks);
+        $updatedTasks=getUpdatedTasks($todayTasks);
+        if ($this->searchedTasks) {
+            $updatedTasks = $this->filterByTaskName(collect($updatedTasks));
+        }
+        $date = todaydate();
 
-        duedate($todayTasks);
-
-        $todayTasks=addTaskFields($todayTasks,null,null);
-
-        $date=todaydate();
-
-        return view('livewire.today-tasks',['todayTasks'=>$todayTasks],['date'=>$date]);
+        return view('livewire.today-tasks', ['todayTasks' => $updatedTasks], ['date' => $date]);
     }
+    function filterByTaskName($tasks)
+    {
+        return $tasks->filter(function ($task) {
+            return stripos($task->task_name, $this->searchedTasks) !== false;
+        });
+    }
+
 }

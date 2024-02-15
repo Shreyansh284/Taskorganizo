@@ -1,4 +1,4 @@
 @extends('master')
 @section('link')
-@livewire('inbox')
+@livewire('inbox', ['taskType' => 'not_completed'])
 @endsection

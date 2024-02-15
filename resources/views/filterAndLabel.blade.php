@@ -1,4 +1,10 @@
 @extends('master')
 @section('link')
-  @livewire('filters-and-labels')
+@livewire('filters-and-labels')
+<script>
+    window.addEventListener('close-model',event=>{
+        $('#addLabel').modal('hide');
+        $('#editLabel').modal('hide');
+    })
+</script>
 @endsection

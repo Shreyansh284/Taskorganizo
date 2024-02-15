@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @livewireScripts
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="reg/css/style.css">
-    <link rel="stylesheet" href="reg/fonts/material-icon/css/material-design-iconic-font.min.css">
     <link rel="stylesheet" href="/dashboard/style.css">
+    <link rel="stylesheet" href="reg/fonts/material-icon/css/material-design-iconic-font.min.css">
 
     <title>TaskOrganizo</title>
 </head>
@@ -74,16 +74,38 @@
         </li>
     </ul>
 </aside>
+<button id="sidebar-toggle" class="btn btn-primary d-lg-none">
+    <i class="bi bi-list"></i>
+</button>
 <section id="content">
 
     <main>
-        @yield('link')
         @livewire('layout')
+        @yield('link')
     </main>
 </section>
 
-<script  data-navigate-once src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script  data-navigate-once src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script  data-navigate-once src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+{{-- <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        initializeSidebarToggle();
 
+        Livewire.hook('afterDomUpdate', () => {
+            initializeSidebarToggle();
+        });
+
+        function initializeSidebarToggle() {
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+
+            if (sidebar && sidebarToggle) {
+                sidebarToggle.addEventListener('click', function () {
+                    sidebar.classList.toggle('active');
+                });
+            }
+        }
+    });
+</script> --}}
 </body>
 </html>

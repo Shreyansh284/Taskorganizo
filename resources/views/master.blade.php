@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/svg+xml" href="favicon.svg">
+        @notifyCss
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="reg/css/style.css">
+        <link rel="stylesheet" href="/dashboard/style.css">
+        @livewireStyles()
+        <title>TaskOrganizo</title>
+    </head>
+    <body>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="reg/css/style.css">
-    <link rel="stylesheet" href="/dashboard/style.css">
-    <link rel="stylesheet" href="reg/fonts/material-icon/css/material-design-iconic-font.min.css">
+      
 
-    <title>TaskOrganizo</title>
-</head>
-<body>
+    <aside id="sidebar">
 
+            <a wire:navigate href="index" class="brand fontbrown" >
+                <i class="bi bi-calendar2-check-fill ms-5"></i>
+                <span class="text ms-2  ">TaskOrganizo</span>
+            </a>
 
-<aside id="sidebar">
-    <a href="index" class="brand" >
-        <i class="bi bi-check-all ms-3 "></i>
-        <span class="text ms-2 ">TaskOrganizo</span>
-    </a>
-    <ul class="side-menu top">
+        <ul class="side-menu top">
 
 
     <li>
@@ -30,9 +33,9 @@
         </a>
     </li>
 
-        <li class="{{request()->is('index')?'active ':''}} ">
-            <a wire:navigate href="{{ URL::to('/') }}/index" >
-                <i class="bi bi-list-task  ms-2"></i>
+    <li class="{{request()->is('index')?'active ':''}} ">
+        <a wire:navigate href="{{ URL::to('/') }}/index" >
+            <i class="bi bi-list-task  ms-2"></i>
                 <span class="text ms-2">Inbox</span>
             </a>
         </li>
@@ -62,7 +65,7 @@
         </li>
         <li  class="{{request()->is('completed')?'active':''}}">
             <a wire:navigate href="{{ URL::to('/') }}/completed" >
-                <i class="bi bi-list-check ms-2"></i>
+                <i class="bi bi-ui-checks ms-2"></i>
                 <span class="text ms-2">Completed Tasks</span>
             </a>
         </li>
@@ -74,20 +77,39 @@
         </li>
     </ul>
 </aside>
-<button id="sidebar-toggle" class="btn btn-primary d-lg-none">
-    <i class="bi bi-list"></i>
-</button>
 <section id="content">
 
+    <nav class="navbar  fw-bold bg-light justify-content-end pb-3 pe-5" >
+
+            <a href="myProfile"  >
+
+                <i class="bi bi-person-fill ms-4""></i>
+                <span class="text ms-2 fontbrown  ">My Profile</span>
+            </a>
+      </nav>
     <main>
         @livewire('layout')
         @yield('link')
     </main>
-</section>
 
+</section>
+<script data-navigate-once src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script  data-navigate-once src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script  data-navigate-once src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-{{-- <script>
+@notifyJs
+<script>
+    window.addEventListener('close-model',event =>{
+        $('#addTask').modal('hide');
+        $('#editTask').modal('hide');
+        $('#addProject').modal('hide');
+        $('#editProject').modal('hide');
+        $('#addLabel').modal('hide');
+        $('#editLabel').modal('hide');
+    })
+</script>
+@livewireScripts()
+
+<script>
     document.addEventListener('DOMContentLoaded', function () {
         initializeSidebarToggle();
 
@@ -106,6 +128,6 @@
             }
         }
     });
-</script> --}}
+</script>
 </body>
 </html>

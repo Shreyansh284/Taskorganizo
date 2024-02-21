@@ -42,7 +42,8 @@ class Layout extends Component
 
         $this->reset();
         $this->dispatch('taskAdded');
-        $this->dispatch('closeTaskModal');
+        $this->dispatch('close-model');
+        notify()->success('Task Added');
     }
     public function render()
     {

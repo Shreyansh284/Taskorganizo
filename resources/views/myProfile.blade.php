@@ -1,4 +1,5 @@
 @extends('master')
 @section('link')
-@livewire('completed-tasks')
+@livewire('profile')
+
 @endsection

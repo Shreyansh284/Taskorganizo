@@ -13,7 +13,7 @@ class usercontroller extends Controller
     {
 
         $rules = [
-            'name' => 'required|regex:/^[A-Za-z_]{1,40}+$/',
+            'name' => 'required|regex:/^[a-zA-Z_0-9]{1,40}+$/',
             'email' => 'required|email',
             'password' => 'required|regex:/^[a-zA-Z_0-9]{8,}+$/|confirmed',
             'password_confirmation' => 'required',

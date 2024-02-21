@@ -1,12 +1,12 @@
 <!-- livewire/upcoming-tasks.blade.php -->
 
 <div>
-    <h5 class="card-title mt-3 ms-2" style="color: brown"><strong>Upcoming Tasks:</strong></h5>
+    <h5 class="card-title mt-3 ms-2 fontbrown" ><strong>Upcoming Tasks:</strong></h5>
 
     <div class="row mt-3 pt-3 px-2  flex-nowrap">
         @foreach ($dates as $date)
             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
-                <h6 class="card-title mb-2 ms-2 m" style="color: brown">{{ $date->format('D, M j') }}</h6>
+                <h6 class="card-title mb-2 fontbrown ms-2 m" >{{ $date->format('D, M j') }}</h6>
                 @if ($datesWithTasks->has($date->format('Y-m-d')))
                 @foreach ($datesWithTasks[$date->format('Y-m-d')] as $task)
                 <div class="card mb-3 shadow border border-0">
@@ -58,11 +58,11 @@
                         @endforeach
                         @else
                         <div class="card shadow border border-0">
-                            <div class="card-body  ">
-                                <strong style="color: brown">!! Task Not Found !!</strong>
+                            <div class="card-body fontbrown ">
+                                <strong >!! Task Not Found !!</strong>
                             </div>
                         </div>
- 
+
                         @endif
             </div>
         @endforeach

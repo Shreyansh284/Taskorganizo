@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+
     return view('welcome');
 });
 
@@ -36,13 +37,18 @@ Route::post('users',[usercontroller::class, 'addUser']);
 
 Route::middleware(['login'])->group(function () {
 
+    Route::view('myProfile','myProfile');
     Route::view('index','index');
     Route::view('today','today');
     Route::view('upcoming','upcoming');
     Route::view('filterAndLabel','filterAndLabel');
     Route::view('project','project');
     Route::view('completed','completed');
-    // Route::get('project',[Projects::class]);
+
+
+    Route::get('project',[Projects::class]);
+
+
     Route::view('master','master');
 
     Route::view('second', 'second');

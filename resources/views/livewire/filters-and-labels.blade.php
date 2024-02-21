@@ -1,13 +1,13 @@
-<div>
+<div class="px-3">
           <div class="table-data">
             <div class="todo">
                 <div class="head ">
                     <div class="flex-grow-1">
-                        <button class="btn justify-content-between p-3"  data-bs-toggle="collapse" data-bs-target="#priorityCollapse" aria-expanded="false" aria-controls="priorityCollapse" >
-                              <strong style="color: rgb(184, 35, 35); text-decoration:none;" class="completed " >FILTER</strong>
+                        <button style="width: -webkit-fill-available" class="btn  text-start justify-content-between p-3"  data-bs-toggle="collapse" data-bs-target="#priorityCollapse" aria-expanded="false" aria-controls="priorityCollapse" >
+                              <strong class="completed fontbrown" >FILTER</strong>
                             </button>
                         </div>
-                        <div class= "justify-content-between p-3"><i class="bi bi-filter" style="color: brown"></i></div>
+                        <div class= "justify-content-between p-3"><i class="bi bi-filter fontbrown" "></i></div>
                 </div>
 
                 <div id="priorityCollapse" class="collapse mt-3">
@@ -32,15 +32,15 @@
         <div class="todo">
             <div class="head">
                 <div class="flex-grow-1">
-                    <button class="btn justify-content-between p-3"  data-bs-toggle="collapse" data-bs-target="#label1Collapse" aria-expanded="false" aria-controls="label1Collapse" >
-                          <strong style="color: rgb(184, 35, 35); text-decoration:none;" class="completed" >LABELS</strong>
+                    <button style="width: -webkit-fill-available" class="btn text-start p-3"  data-bs-toggle="collapse" data-bs-target="#label1Collapse" aria-expanded="false" aria-controls="label1Collapse" >
+                          <strong  class="completed fontbrown" >LABELS</strong>
                         </button>
                     </div>
                     <div class= "justify-content-between p-3"><a  data-bs-toggle="modal" data-bs-target="#addLabel"> <i class="bi-plus-circle-fill" ></i></a></div>
 
             </div>
 
-            <div id="label1Collapse" class="collapse mt-3" wire:ignore.self>
+            <div id="label1Collapse"  class="collapse mt-3" wire:ignore.self>
                 @if($labels!="[]")
                 <ul class="todo-list">
                     @foreach ($labels as $label )
@@ -64,7 +64,7 @@
         </div>
         </div>
         <div wire:ignore.self class="modal fade" id="editLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="">Edit Label</h1>
@@ -73,18 +73,18 @@
                     <div class="modal-body">
                         <form wire:submit="updateLabel" >
                             <div class="form-group">
-                                <input wire:model="label_name" type="text" class="form-control"
-                                    required>
+                                <input wire:model="edit_label_name" type="text" class="form-control"
+                                    >
                                 <span>
-                                    @error('label_name')
+                                    @error('edit_label_name')
                                         {{ $message}}
                                     @enderror
                                 </span>
                             </div>
 
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-danger" >Edit</button>
                                 <button type="button" class="btn btn-secondary"data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn color" >Edit</button>
                             </div>
                         </form>
 
@@ -95,7 +95,7 @@
 
         </div>
           <div wire:ignore.self class="modal fade border-0" id="addLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header">
                   <h1 class="modal-title fs-5" id="exampleModalLabel">Add Label</h1>
@@ -106,7 +106,7 @@
                         @csrf
                         <div class="form-group">
                             <input  wire:model="label_name"  type="text" class="form-control" id="recipient-name "
-                                placeholder="Label Name" required>
+                                placeholder="Label Name" >
                             <span>
                                 @error('label_name')
                                     {{ $message }}
@@ -116,7 +116,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-danger">Add Label</button>
+                    <button type="submit" class="btn color">Add Label</button>
                 </div>
                 </form>
 
@@ -126,23 +126,5 @@
             </div>
         </div>
         </div>
-        {{-- <script>
-            document.addEventListener('livewire:initialized',()=>{
-                @this.on('closeModal',(event)=>{
 
-                    var mymodal=document.querySelector('#addLabel')
-                    var modal=bootstrap.Modal.getOrCreateInstance(mymodal)
-                    modal.hide();
-                })
-            })
-        </script> --}}
-        <script>
-            document.addEventListener('livewire:initialized',()=>{
-                @this.on('closeModal',(event)=>{
 
-                console.log('hi');
-                $('#addLabel').modal('hide');
-                $('#editLabel').modal.hide;
-            })
-        })
-        </script>

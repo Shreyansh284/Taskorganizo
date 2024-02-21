@@ -11,6 +11,7 @@ class FiltersAndLabels extends Component
 {
 
     public $label_name;
+    public $edit_label_name;
     public $label_id;
     public function addLabel(Request $request)
     {
@@ -26,12 +27,14 @@ class FiltersAndLabels extends Component
         if ($checkLabelAdded) {
             $this->reset(['label_name']);
         }
-       dd($this->dispatch('close-modal'));
+        $this->dispatch('close-model');
+        notify()->success('Label Added');
     }
 
     public function deleteLabel($id)
     {
         label::where('id', $id)->delete();
+        notify()->success(' Label Deleted');
 
     }
     public function editLabel($id)
@@ -39,7 +42,7 @@ class FiltersAndLabels extends Component
         $label = label::where('id', $id)->first();
         if ($label) {
             $this->label_id = $label->id;
-            $this->label_name = $label->label_name;
+            $this->edit_label_name = $label->label_name;
         }
     }
     public function updateLabel()
@@ -47,12 +50,13 @@ class FiltersAndLabels extends Component
         $email = session()->get('email');
         $user = getUserByEmail($email);
         $this->validate([
-            'label_name' => 'required|unique:labels,label_name,NULL,id,user_id,' . $user->id,
+            'edit_label_name' => 'required|unique:labels,label_name,NULL,id,user_id,' . $user->id,
         ]);
 
-        label::where('id', $this->label_id)->update(['label_name' => $this->label_name]);
+        label::where('id', $this->label_id)->update(['label_name' => $this->edit_label_name]);
 
-        $this->dispatch('close-modal');
+        $this->dispatch('close-model');
+        notify()->success('Label Updated');
 
     }
     public function render()

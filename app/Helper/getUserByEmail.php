@@ -3,13 +3,14 @@
 use App\Models\label;
 use App\Models\project;
 use App\Models\task;
+use App\Models\User;
 use Illuminate\Support\Carbon;
 use App\CustomModels\TaskData;
 
 
 function getUserByEmail($email)
 {
-    return \App\Models\User::where('email', $email)->first();
+    return User::where('email', $email)->first();
 }
 
 
@@ -58,16 +59,18 @@ function getNotCompletedTasks($userId)
 
 function getTasksWhereDueDateIsToday($userId)
 {
-    $tasks=getNotCompletedTasks($userId);
+    $tasks=getTasks($userId);
+
     return $tasks->filter(function($task)
     {
-        return Carbon::parse($task->due_date)==Carbon::today();
+        return Carbon::parse($task->due_date)==Carbon::today() && $task->completed==0;
     });
 }
 
 function getCompletedTasks($userId)
 {
     $tasks=getTasks($userId);
+
     return $tasks->filter(function ($task)
     {
         return $task->completed == 1;

@@ -1,12 +1,12 @@
-<div >
+<div class="px-3">
     <div class="table-data ">
         <div class="todo">
             <div class="justify-content-between head ms-3 p-2">
                 <h3>Projects</h3>
-                <a data-bs-toggle="modal" data-bs-target="#addProject"  > <strong><i class='bi bi-plus-circle-fill'
-                            style="color: brown"></strong></i></a>
+                <a data-bs-toggle="modal" data-bs-target="#addProject"  > <strong><i class='bi bi-plus-circle-fill fontbrown '
+                            ></strong></i></a>
             </div>
-            <div>
+            <div style="height:75vh;overflow:auto">
                 <br>
                 <ul class="todo-list ">
                     @if ($projects != '[]')
@@ -32,27 +32,27 @@
         </div>
     </div>
     <div wire:ignore.self class="modal fade" id="editProject" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="">Edit Project</h1>
-                    <button type="button" class="btn-close"data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close"data-bs-dismiss="modal" wire:click="clear" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form wire:submit="updateProject" >
                         <div class="form-group">
-                            <input wire:model="project_name" type="text" class="form-control"
-                                required>
+                            <input wire:model="edit_project_name" type="text" class="form-control"
+                                >
                             <span>
-                                @error('project_name')
+                                @error('edit_project_name')
                                     {{ $message     }}
                                 @enderror
                             </span>
                         </div>
 
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-danger" >Edit</button>
-                            <button type="button" class="btn btn-secondary"data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary"  wire:click="clear"  data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn color" >Edit</button>
                         </div>
                     </form>
 
@@ -64,27 +64,28 @@
     </div>
 
     <div wire:ignore.self class="modal fade" id="addProject" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="">Add Project</h1>
                     <button type="button" class="btn-close"data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form wire:submit="addProject" >
+                    <form wire:submit.prevent="addProject" >
                         <div class="form-group">
                             <input wire:model="project_name" type="text" class="form-control" id="recipient-name "
-                                placeholder="Project Name" required>
+                                placeholder="Project Name" >
                             <span>
                                 @error('project_name')
                                     {{ $message     }}
                                 @enderror
                             </span>
+
                         </div>
 
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-danger" >Add Project</button>
                             <button type="button" class="btn btn-secondary"data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn color" wire:click="$dispatch('closeProjectModal')" >Add Project</button>
                         </div>
                     </form>
 
@@ -96,13 +97,4 @@
     </div>
 
 </div>
-    <script data-navigate-once >
-        document.addEventListener('livewire:initialized',()=>{
-            @this.on('closeProjectModal',(event)=>{
 
-                var mymodal=document.querySelector('#addProject')
-                var modal=bootstrap.Modal.getOrCreateInstance(mymodal)
-                modal.hide();
-            })
-        })
-    </script>

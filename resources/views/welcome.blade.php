@@ -4,13 +4,11 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
   <title>TaskOrganizo</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
-
-
   <!-- Google Fonts -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
@@ -21,18 +19,18 @@
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
   <link href="assets/css/style.css" rel="stylesheet">
-
+  @notifyCss
 </head>
 
 <body>
 
-  <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top d-flex align-items-center">
-    <div class="container d-flex align-items-center justify-content-between">
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top d-flex align-items-center">
+        <div class="container d-flex align-items-center justify-content-between">
 
-      <div class="logo">
-        <h1 class="text-light"><a href="index"><span>TaskOrganizo</span></a></h1>
-      </div>
+            <div class="logo">
+                <h1 class="text-light"><a href="index"><span>TaskOrganizo</span></a></h1>
+            </div>
 
       <nav id="navbar" class="navbar">
         <ul>
@@ -46,6 +44,7 @@
       </nav><!-- .navbar -->
 
     </div>
+    <x-notify::notify />
   </header><!-- End Header -->
 
   <!-- ======= Hero Section ======= -->
@@ -70,11 +69,11 @@
 
   <main id="main">
 
-    <!-- ======= About Section ======= -->
-    <section id="about" class="about">
-      <div class="container">
+      <!-- ======= About Section ======= -->
+      <section id="about" class="about">
+          <div class="container">
 
-        <div class="row justify-content-between">
+              <div class="row justify-content-between">
           <div class="col-lg-5 d-flex align-items-center justify-content-center about-img">
             <img src="assets/img/about-img.svg" class="img-fluid" alt="" data-aos="zoom-in">
           </div>
@@ -100,6 +99,7 @@
 
       </div>
     </section><!-- End About Section -->
+
 
     <!-- ======= Services Section ======= -->
     <section id="services" class="services section-bg">
@@ -172,7 +172,7 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-
+  @notifyJs
 </body>
 
 </html>

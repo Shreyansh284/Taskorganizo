@@ -3,3 +3,4 @@
 @section('link')
 @livewire('projects')
 @endsection
+

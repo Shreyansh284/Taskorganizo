@@ -336,7 +336,19 @@ input {
     input:focus:-moz-placeholder {
       color: #222; }
 
+      .fontbrown{
+        color: brown;
+      }
 
+
+      button.color{
+        background-color: brown;
+        color: white;
+      }
+      button.color:hover{
+        background-color: rgb(139, 13, 13);
+        color: white;
+      }
 .agree-term {
   display: inline-block;
   width: auto; }

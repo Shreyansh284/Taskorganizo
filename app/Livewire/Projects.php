@@ -14,6 +14,7 @@ class Projects extends Component
     public $project_name;
     public $edit_project_name;
     public $project_id;
+
     public function addProject(Request $request)
     {
         $email = session()->get('email');
@@ -27,12 +28,15 @@ class Projects extends Component
         $checkprojectAdded = $project->save();
         if ($checkprojectAdded) {
             $this->reset(['project_name']);
-            $this->dispatch('closeProjectModal');
+            $this->dispatch('close-model');
+            notify()->success('Project Added');
+
         }
     }
     public function deleteProject($id)
     {
         project::where('id', $id)->delete();
+        notify()->success('Project Deleted');
     }
 
     public function editProject($id)
@@ -40,18 +44,22 @@ class Projects extends Component
         $project = project::where('id', $id)->first();
         if ($project) {
             $this->project_id = $project->id;
-            $this->project_name = $project->project_name;
+            $this->edit_project_name = $project->project_name;
+
         }
     }
+
     public function updateProject()
     {
 
         $email = session()->get('email');
         $user = getUserByEmail($email);
         $this->validate([
-            'project_name' => 'required|unique:projects,project_name,NULL,id,user_id,' . $user->id,
+            'edit_project_name' => 'required|unique:projects,project_name,NULL,id,user_id,' . $user->id,
         ]);
-        project::where('id', $this->project_id)->update(['project_name' => $this->project_name]);
+        project::where('id', $this->project_id)->update(['project_name' => $this->edit_project_name]);
+        notify()->success('Project Updated');
+        $this->dispatch('close-model');
     }
     public function render()
     {

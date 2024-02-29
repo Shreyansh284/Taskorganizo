@@ -14,7 +14,7 @@ class logincontroller extends Controller
         if($this->checkUser($requestLogin,$user))
         {
 
-            return redirect('index');
+            return redirect('inbox');
         }
         else
         {

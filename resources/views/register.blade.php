@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,9 +8,11 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
     <title>TaskOrganizo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="reg/css/style.css">
 </head>
+
 <body>
 
     <div class="main">
@@ -18,13 +21,14 @@
                 <div class="signup-content">
                     <div class="signup-form">
                         <h2 class="form-title">Sign up</h2>
-                        <form method="POST"  action="{{ URL::to('/') }}/users"class="register-form" id="register-form">
+                        <form method="POST" action="{{ URL::to('/') }}/users"class="register-form" id="register-form">
                             @csrf
 
                             <div class="form-group">
 
                                 <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="name" id="name" placeholder="Your Name"  value="{{ old('name') }}" />
+                                <input type="text" name="name" id="name" placeholder="Your Name"
+                                    value="{{ old('name') }}" />
 
                             </div>
                             <span class="text-danger">
@@ -34,7 +38,8 @@
                             </span>
                             <div class="form-group">
                                 <label for="email"><i class="zmdi zmdi-email"></i></label>
-                                <input type="email" name="email" id="email" placeholder="Your Email" value="{{ old('email') }}" />
+                                <input type="email" name="email" id="email" placeholder="Your Email"
+                                    value="{{ old('email') }}" />
 
                             </div>
                             <span class="text-danger">
@@ -44,7 +49,7 @@
                             </span>
                             <div class="form-group">
                                 <label for="pass"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="password" name="password" id="pass" placeholder="Password"  />
+                                <input type="password" name="password" id="pass" placeholder="Password" />
 
                             </div>
                             <span class="text-danger">
@@ -54,7 +59,8 @@
                             </span>
                             <div class="form-group">
                                 <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
-                                <input type="password" name="password_confirmation" id="re_pass" placeholder="Repeat your password"/>
+                                <input type="password" name="password_confirmation" id="re_pass"
+                                    placeholder="Repeat your password" />
 
                             </div>
                             <span class="text-danger">
@@ -81,4 +87,5 @@
     </div>
 
 </body>
+
 </html>

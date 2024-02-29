@@ -3,10 +3,14 @@ namespace App\Traits;
 use App\Models\label;
 use App\Models\project;
 use App\Models\task;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 trait TaskTrait
 {
-    public $taskType;
+
+    public $startDate;
+    public $endDate;
     public $edit_task_id;
     public $edit_task_name = "";
     public $edit_task_description;
@@ -49,7 +53,6 @@ trait TaskTrait
                 $this->edit_labelId = $task->label_id;
             }
             $this->edit_priority = $task->priority;
-
         }
     }
 
@@ -60,7 +63,9 @@ trait TaskTrait
 
     public function updateTask()
     {
-        task::where('id',$this->edit_task_id)->update(['task_name'=>$this->edit_task_name,'task_description'=>$this->edit_task_description,'due_date'=>$this->edit_due_date,'priority'=>$this->edit_priority,'project_id'=>$this->edit_projectId,'label_id'=>$this->edit_labelId]);
+        task::where('id',$this->edit_task_id)->update(['task_name'=>$this->edit_task_name,'task_description'=>$this->edit_task_description,'due_date'=>$this->edit_due_date,'priority'=>$this->edit_priority,'project_id' => $this->edit_projectId !== '' ? $this->edit_projectId : null,'label_id' => $this->edit_labelId !== '' ? $this->edit_labelId : null]);
+
+
         $this->dispatch('close-model');
 
         notify()->success('Task Updated');
@@ -69,7 +74,8 @@ trait TaskTrait
     public function deleteTask($id)
     {
         task::where('id', $id)->delete();
-        notify()->success('Task Deleted');
+
+
     }
 
     public function toggleTaskStatus($id)
@@ -79,6 +85,13 @@ trait TaskTrait
         if ($task) {
             $task->completed = !$task->completed;
             $task->save();
+            // $user = getUserByEmail(session()->get('email'));
+            // $data = ['email' => $user->email, 'name' => $user->name ,'task'=>$task->task_name];
+            // Mail::send('emails.complete',['data' => $data], function ($message) use ($data){
+            //     $message->to($data['email'], $data['name']);
+            //     $message->from('taskorganizo@gmail.com');
+            // });
+
 
         }
     }
@@ -119,31 +132,46 @@ trait TaskTrait
    function getFilteredTasks($updatedTasks)
     {
         if ($this->searchedTasks) {
-            $updatedTasks = $this->filterByTaskName(collect($updatedTasks));
+            $updatedTasks = $this->filterByTaskName($updatedTasks);
         }
 
         if ($this->priorityFilter) {
-            $updatedTasks = $this->filterByPriority(collect($updatedTasks));
+            $updatedTasks = $this->filterByPriority($updatedTasks);
         }
 
         if ($this->labelFilter) {
-            $updatedTasks = $this->filterByLabel(collect($updatedTasks));
+            $updatedTasks = $this->filterByLabel($updatedTasks);
         }
 
         if ($this->projectFilter) {
-            $updatedTasks = $this->filterByProject(collect($updatedTasks));
+            $updatedTasks = $this->filterByProject($updatedTasks);
         }
 
-        if ($this->dueDateFilter) {
-            $updatedTasks = $this->filterByDueDate(collect($updatedTasks));
+        if ($this->startDate && $this->endDate) {
+            $updatedTasks = $this->getTaskBetweenGivenDateRange($updatedTasks,$this->startDate,$this->endDate);
         }
         return $updatedTasks;
     }
-    public function mount()
+
+    function getTaskBetweenGivenDateRange($updatedTasks,$startDate,$endDate)
+    {
+        $filteredTasks = $updatedTasks->filter(function ($task) use ($startDate, $endDate) {
+            $dueDateWithinRange = Carbon::parse($task->due_date)->between($startDate, $endDate);
+            $taskDurationWithinRange = Carbon::parse($task->due_date)->greaterThanOrEqualTo($startDate) &&
+                                       Carbon::parse($task->due_date)->lessThanOrEqualTo($endDate);
+
+            return ($dueDateWithinRange || $taskDurationWithinRange);
+        });
+
+        // Sort the tasks by due date
+        $sortedTasks = $filteredTasks->sortBy(function ($task) {
+            return Carbon::parse($task->due_date)->timestamp;
+        });
+        return $sortedTasks;
+    }
+    public function commanMount()
     {
         $this->loadProjects();
         $this->loadLabels();
     }
-
-
 }

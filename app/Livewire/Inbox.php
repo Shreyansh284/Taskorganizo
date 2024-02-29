@@ -11,24 +11,30 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 use stdClass;
 use App\CustomModels\TaskData;
+use Livewire\WithPagination;
 
 
 class Inbox extends Component
 {
 
+    use WithPagination;
     use TaskTrait;
-
     #[On('taskAdded')]
+    public function mount()
+    {
+        $this->commanMount();
+    }
     public function render()
     {
         $user = getUserByEmail(session()->get('email'));
 
         $tasks = getNotCompletedTasks($user->id);
 
-        $updatedTasks=getUpdatedTasks($tasks);
+        $updatedTasks = getUpdatedTasks($tasks);
+        $updatedTasks = collect($updatedTasks);
+        getFormetedDuedate($updatedTasks);
+        $updatedTasks = $this->getFilteredTasks($updatedTasks);
 
-        $updatedTasks=$this->getFilteredTasks($updatedTasks);
-        getFormetedDuedate(collect($updatedTasks));
 
         return view('livewire.inbox', ['tasks' => $updatedTasks]);
     }

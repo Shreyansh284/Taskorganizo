@@ -2,8 +2,10 @@
 
 namespace App\Livewire;
 
+
 use App\Models\project;
 use App\Models\User;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Illuminate\Http\Request;
@@ -29,8 +31,6 @@ class Projects extends Component
         if ($checkprojectAdded) {
             $this->reset(['project_name']);
             $this->dispatch('close-model');
-            notify()->success('Project Added');
-
         }
     }
     public function deleteProject($id)
@@ -45,13 +45,11 @@ class Projects extends Component
         if ($project) {
             $this->project_id = $project->id;
             $this->edit_project_name = $project->project_name;
-
         }
     }
 
     public function updateProject()
     {
-
         $email = session()->get('email');
         $user = getUserByEmail($email);
         $this->validate([

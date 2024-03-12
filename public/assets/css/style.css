@@ -25,6 +25,20 @@ a:hover {
 }
 
 
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #aaaaaa72;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color:#692626;
+    border-radius: 10px;
+}
 h1,
 h2,
 h3,

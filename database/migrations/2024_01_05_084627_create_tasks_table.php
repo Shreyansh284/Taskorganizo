@@ -11,26 +11,28 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tasks', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('project_id')->nullable(true);
-            $table->unsignedBigInteger('label_id')->nullable(true);
+            Schema::create('tasks', function (Blueprint $table) {
+                $table->id();
+                $table->unsignedBigInteger('user_id');
+                $table->unsignedBigInteger('project_id')->nullable(true);
+                $table->unsignedBigInteger('label_id')->nullable(true);
+                $table->unsignedBigInteger('team_id')->nullable(true);
+                $table->string('task_name');
+                $table->string('task_description')->nullable(true);
+                $table->date('due_date')->nullable(true);
+                $table->enum('priority', ['low', 'medium', 'high'])->default('low');
+                $table->boolean('completed')->default(false);
+                $table->timestamps();
 
-            $table->string('task_name');
-            $table->string('task_description')->nullable(true);
-            $table->date('due_date')->nullable(true);
-            $table->enum('priority', ['low', 'medium', 'high'])->default('low');
-            $table->boolean('completed')->default(false);
-            $table->timestamps();
-
-            $table->foreign('user_id')
-            ->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('project_id')
-            ->references('id')->on('projects')->onDelete('cascade');
-            $table->foreign('label_id')
-            ->references('id')->on('labels')->onDelete('set null');
-        });
+                $table->foreign('user_id')
+                ->references('id')->on('users')->onDelete('cascade');
+                $table->foreign('project_id')
+                ->references('id')->on('projects')->onDelete('set null');
+                $table->foreign('label_id')
+                ->references('id')->on('labels')->onDelete('set null');
+                $table->foreign('team_id')
+                ->references('id')->on('teams')->onDelete('cascade');
+            });
     }
     /**
      * Reverse the migrations.

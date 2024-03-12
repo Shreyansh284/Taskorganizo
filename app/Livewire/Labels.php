@@ -27,10 +27,14 @@ class Labels extends Component
             $this->reset(['label_name']);
         }
         $this->dispatch('close-model');
+        session()->flash('success','Label Added');
+
     }
     public function deleteLabel($id)
     {
         label::where('id', $id)->delete();
+        session()->flash('success','Label Deleted');
+
     }
     public function editLabel($id)
     {
@@ -51,6 +55,8 @@ class Labels extends Component
         label::where('id', $this->label_id)->update(['label_name' => $this->edit_label_name]);
 
         $this->dispatch('close-model');
+        session()->flash('success','Label Updated');
+
     }
     public function render()
     {

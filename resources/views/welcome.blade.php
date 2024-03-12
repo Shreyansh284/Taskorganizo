@@ -31,7 +31,7 @@
         <div class="container d-flex align-items-center justify-content-between">
 
             <div class="logo">
-                <h1 class="text-light"><a href="index"><span>TaskOrganizo</span></a></h1>
+                <h1 class="text-light"><a href="#hero"><span>TaskOrganizo</span></a></h1>
             </div>
 
             <nav id="navbar" class="navbar">
@@ -39,8 +39,8 @@
                     <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
                     <li><a class="nav-link scrollto" href="#about">About Us</a></li>
                     <li><a class="nav-link scrollto" href="#services">Services</a></li>
-                    <li><a class="nav-link scrollto" href="register">Register</a></li>
-                    <li><a class="getstarted scrollto" href="login">Get Started</a></li>
+                    <li><a class="nav-link scrollto" href="login">Log in</a></li>
+                    <li><a class="getstarted scrollto" href="register">Get Started</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
@@ -58,7 +58,7 @@
                     <h1></h1>
                     <h2>" Simplify your daily planning and boost productivity effortlessly with TaskOrganizo "</h2>
                     <div>
-                        <a href="login" class="btn-get-started scrollto">Get Started</a>
+                        <a href="register" class="btn-get-started scrollto">Get Started</a>
                     </div>
                 </div>
                 <div class="col-lg-6 order-1 order-lg-2 hero-img">

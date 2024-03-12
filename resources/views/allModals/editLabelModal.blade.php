@@ -8,7 +8,7 @@
             <div class="modal-body">
                 <form wire:submit="updateLabel">
                     <div class="form-group">
-                        <input wire:model.live="edit_label_name" type="text" class="form-control">
+                        <input wire:model="edit_label_name" type="text" class="form-control">
                         <span>
                             @error('edit_label_name')
                                 {{ $message }}

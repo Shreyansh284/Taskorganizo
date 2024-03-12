@@ -1,7 +1,8 @@
-<div class="ps-2">
-    <div class="sticky-top">
+<div class="ps-2" wire:poll.keep-alive>
+    @include('commanCode.alert')
+    <div class="sticky">
         <div class="col d-flex ">
-            <h5 class="card-title ms-1 mt-2 fontbrown customtitle"><strong class="me-2">Today</strong></h5>
+            <h5 class="card-title ms-1 mt-2 fontbrown inboxTitle"><strong class="me-2">Today</strong></h5>
             @include('commanCode.search')
         </div>
         <div class="row d-flex justify-content-around px-2 fontbrown">
@@ -31,9 +32,9 @@
             </div>
         </div>
     </div>
-    <div class="row mt-3 pt-3  custom">
+    <div class="row mt-3 pt-3 indoxCardsDiv  ">
         @forelse($tasks as $task)
-            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-3">
+            <div class="col-xl-4 col-lg-6 col-md-6  col-sm-12 mb-3">
                 @include('commanCode.card', ['task' => $task])
             </div>
         @empty

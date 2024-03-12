@@ -3,6 +3,7 @@ namespace App\Traits;
 use App\Models\label;
 use App\Models\project;
 use App\Models\task;
+use App\Models\team;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 
@@ -18,6 +19,8 @@ trait TaskTrait
     public $edit_priority;
     public $edit_projectId;
     public $edit_labelId;
+    public $edit_teamId;
+
     public $searchedTasks = "";
     public $priorityFilter = "";
     public $labelFilter = "";
@@ -25,6 +28,7 @@ trait TaskTrait
     public $projectFilter = "";
     public $projects = [];
     public $labels = [];
+    public $teams = [];
     public function loadProjects()
     {
         $user = getUserByEmail(session()->get('email'));
@@ -35,6 +39,13 @@ trait TaskTrait
         $user = getUserByEmail(session()->get('email'));
         $this->labels = label::where('user_id', $user->id)->pluck('label_name', 'id')->toArray();
     }
+    public function loadTeams()
+    {
+        $user = getUserByEmail(session()->get('email'));
+        $this->teams = team::where('created_by', $user->id)->pluck('team_name', 'id')->toArray();
+    }
+
+
     public function editTask($id)
     {
         $task = task::where('id', $id)->first();
@@ -52,28 +63,35 @@ trait TaskTrait
             {
                 $this->edit_labelId = $task->label_id;
             }
+            if ($task->team_id != null)
+            {
+                $this->edit_teamId = $task->team_id;
+            }
             $this->edit_priority = $task->priority;
         }
     }
 
     public function clear()
     {
-        $this->reset(['edit_task_name','edit_task_description','edit_due_date','edit_projectId','edit_labelId','edit_priority']);
+        $this->reset(['edit_task_name','edit_task_description','edit_due_date','edit_projectId','edit_labelId','edit_teamId','edit_priority']);
     }
 
     public function updateTask()
     {
-        task::where('id',$this->edit_task_id)->update(['task_name'=>$this->edit_task_name,'task_description'=>$this->edit_task_description,'due_date'=>$this->edit_due_date,'priority'=>$this->edit_priority,'project_id' => $this->edit_projectId !== '' ? $this->edit_projectId : null,'label_id' => $this->edit_labelId !== '' ? $this->edit_labelId : null]);
+        task::where('id',$this->edit_task_id)->update(['task_name'=>$this->edit_task_name,'task_description'=>$this->edit_task_description,'due_date'=>$this->edit_due_date,'priority'=>$this->edit_priority,'project_id' => $this->edit_projectId !== '' ? $this->edit_projectId : null,'label_id' => $this->edit_labelId !== '' ? $this->edit_labelId : null,'team_id' => $this->edit_teamId !== '' ? $this->edit_teamId : null]);
 
 
         $this->dispatch('close-model');
+        $this->clear();
 
-        notify()->success('Task Updated');
+        session()->flash('success','Task Updated');
+
     }
 
     public function deleteTask($id)
     {
         task::where('id', $id)->delete();
+        session()->flash('success','Task Deleted');
 
 
     }
@@ -85,13 +103,7 @@ trait TaskTrait
         if ($task) {
             $task->completed = !$task->completed;
             $task->save();
-            // $user = getUserByEmail(session()->get('email'));
-            // $data = ['email' => $user->email, 'name' => $user->name ,'task'=>$task->task_name];
-            // Mail::send('emails.complete',['data' => $data], function ($message) use ($data){
-            //     $message->to($data['email'], $data['name']);
-            //     $message->from('taskorganizo@gmail.com');
-            // });
-
+            session()->flash('success','Task Completed');
 
         }
     }
@@ -169,9 +181,11 @@ trait TaskTrait
         });
         return $sortedTasks;
     }
-    public function commanMount()
+    public function commonMount()
     {
         $this->loadProjects();
         $this->loadLabels();
+        $this->loadTeams();
+
     }
 }

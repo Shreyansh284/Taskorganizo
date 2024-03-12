@@ -23,6 +23,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
+Route::get('user/{id}/addteam',[usercontroller::class,'addteam']);
+Route::get('team/{id}/addUser',[usercontroller::class,'addUserInTeam']);
+Route::get('team/user/{id}',[usercontroller::class,'getTeamByUserId']);
+Route::get('user/team/{id}',[usercontroller::class,'getUserByTeamId']);
+
+
+
 ///////////         USERS            //////////
 
 Route::get('users',[usercontroller::class, 'getAllUsers']);

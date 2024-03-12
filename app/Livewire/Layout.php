@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\label;
 use App\Models\project;
 use App\Models\task;
+use App\Models\team;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ class Layout extends Component
     public $priority;
     public $projectId;
     public $labelId;
+    public $teamId;
 
     public function addTask(Request $request)
     {
@@ -34,10 +36,16 @@ class Layout extends Component
         } else {
             $task->label_id = null;
         }
+        if ($this->teamId !== null) {
+            $task->team_id = $this->teamId;
+        } else {
+            $task->team_id = null;
+        }
         $task->task_name = $this->task_name;
         $task->task_description = $this->task_description;
         $task->due_date = $this->due_date;
         $task->priority = $this->priority ? $this->priority : 'low';
+
         $task->save();
 
         $this->reset();
@@ -51,7 +59,8 @@ class Layout extends Component
         $user = getUserByEmail($email);
         $projects = project::where('user_id', $user->id)->get();
         $labels = label::where('user_id', $user->id)->get();
+        $teams = team::where('created_by', $user->id)->get();
 
-        return view('livewire.layout', ['projects' => $projects, 'labels' => $labels]);
+        return view('livewire.layout', ['projects' => $projects, 'labels' => $labels,'teams'=>$teams]);
     }
 }

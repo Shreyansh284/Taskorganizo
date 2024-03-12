@@ -12,18 +12,19 @@
         </tr>
     </thead>
     <tbody>
-        @forelse ($todayTasksCount as $todayTasks)
+        @forelse ($todayTasks as $todayTask)
             <tr style="border-bottom: 1px solid #e5c8c8; transition: background-color 0.3s;">
-                <td style="padding: 15px; text-align: left;">{{ $todayTasks['task_name'] }}</td>
-                <td style="padding: 15px; text-align: left;">{{ $todayTasks['task_description'] }}</td>
-                <td style="padding: 15px; text-align: left; white-space: nowrap;">{{ $todayTasks['due_date'] }}</td>
-                <td style="padding: 15px; text-align: left;">{{ $todayTasks['project_name'] }}</td>
-                <td style="padding: 15px; text-align: left;">{{ $todayTasks['label_name'] }}</td>
-                <td style="padding: 15px; text-align: left;">{{ $todayTasks['priority'] }}</td>
+                <td style="padding: 15px; text-align: center;">{{ $todayTask['task_name'] }}</td>
+                <td style="padding: 15px; text-align: center;">{{ $todayTask['task_description']==''? "--": $todayTask['task_description'] }}</td>
+                <td style="padding: 15px; text-align: center; white-space: nowrap;">{{ $todayTask['due_date'] }}</td>
+                <td style="padding: 15px; text-align: center;">{{ $todayTask['label_name']==''? "--":$todayTask['label_name'] }}</td>
+                <td style="padding: 15px; text-align: center;">{{ $todayTask['project_name']==''? "--":$todayTask['project_name'] }}</td>
+                <td style="padding: 15px; text-align: center;">{{ $todayTask['priority'] }}</td>
             </tr>
         @empty
-            <tr style="border-bottom: 1px solid #e5c8c8; transition: background-color 0.3s; white-space: nowrap;">!! NO
-                TASKS FOR TODAY !!
+            <tr style="border-bottom: 1px solid #e5c8c8; transition: background-color 0.3s; white-space: nowrap;">
+                <td style="padding: 15px; text-align: center;"  colspan="6">!! NO
+                    TASKS FOR TODAY !!</td>
             </tr>
         @endforelse
     </tbody>

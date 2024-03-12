@@ -20,10 +20,9 @@ class Profile extends Component
         $this->validate([
             'user_name' => 'required',
         ]);
-
         User::where('id', $this->user_id)->update(['name' => $this->user_name]);
+        session()->flash('success','Profile Updated');
     }
-
     public function changePassword()
     {
         $this->validate([
@@ -37,6 +36,8 @@ class Profile extends Component
             if ($this->password != $this->current_password) {
                 if ($this->password == $this->password_confirmation) {
                     $user->where('id', $user->id)->update(['password' => Hash::make($this->password)]);
+                    session()->flash('success','Password Updated');
+
                 } else {
                     $this->addError('password_confirmation', 'Confirm password is not matching');
                 }

@@ -41,4 +41,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function usersTeams()
+    {
+        return $this->belongsToMany(team::class,'team_user')->withPivot('status');;
+    }
+
 }

@@ -1,9 +1,10 @@
-<div>
+<div wire:poll.keep-alive>
+    @include('commanCode.alert')
     <div class="d-flex justify-content-between mt-2">
         <h5 class="card-title ms-4 fontbrown mt-2 "><strong class="me-2">Projects</strong></h5>
-        <button data-bs-toggle="modal" data-bs-target="#addProject" class="btn color"> + Add Project</button>
+        <button data-bs-toggle="modal" data-bs-target="#addProject" class="btn color me-2"> + Add Project</button>
     </div>
-    <div class="row mt-4 ms-3 pt-3 customproject ">
+    <div class="row mt-4 mx-3  pt-3 CardsDiv ">
         @forelse($projects as $project)
             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-3">
                 <div class="card  shadow border boder-0 p-3">
@@ -16,9 +17,9 @@
                         </h6>
                         <div class="dropdown">
                             <a style="text-decoration: none;" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-three-dots"></i>
+                                <i class="bi iconColor bi-three-dots"></i>
                             </a>
-                            <ul class="dropdown-menu shadow border border-0">
+                            <ul wire:ignore.self class="dropdown-menu shadow border border-0">
                                 <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editProject"
                                     wire:click="editProject({{ $project->id }})">Edit</a>
                                 <a class="dropdown-item" wire:click="deleteProject({{ $project->id }})">Delete</a>

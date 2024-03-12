@@ -19,10 +19,7 @@ class CalenderView extends Component
     #[On('taskAdded')]
     public function mount()
     {
-        $this->startDate = now()->toDateString();
-        $this->endDate = now()->addDays(6)->toDateString();
-
-        $this->commanMount();
+        $this->commonMount();
     }
     public function render()
     {
@@ -35,11 +32,15 @@ class CalenderView extends Component
         $updatedTasks = $this->getFilteredTasks($updatedTasks);
 
         getFormetedDuedate($updatedTasks);
-        $datesWithTasks = $this->organizeTasksByDate($updatedTasks, $this->startDate, $this->endDate);
 
-        $dates = Carbon::parse($this->startDate)->toPeriod($this->endDate)->toArray();
+        $datesWithTasks = [];
+        $dates = [];
 
-        return view('livewire.calender-view', compact('datesWithTasks', 'dates'));
+        if ($this->startDate !== null && $this->endDate !== null) {
+            $dates = Carbon::parse($this->startDate)->toPeriod($this->endDate)->toArray();
+            $datesWithTasks = $this->organizeTasksByDate($updatedTasks, $this->startDate, $this->endDate);
+        }
+        return view('livewire.calender-view', ['datesWithTasks' => $datesWithTasks, 'user_id' => $user->id, 'dates' => $dates]);
     }
     private function organizeTasksByDate($tasks, $startDate, $endDate)
     {
@@ -51,5 +52,15 @@ class CalenderView extends Component
         }
         return $datesWithTasks;
     }
+    public function renderAfterSubmit()
+    {
+        $this->validate([
+            'startDate' => 'required|date',
+            'endDate' => 'required|date|after_or_equal:startDate',
+        ]);
+        $this->render();
+    }
+
+
 }
 

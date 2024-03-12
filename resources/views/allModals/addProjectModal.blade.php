@@ -8,7 +8,7 @@
             <div class="modal-body">
                 <form wire:submit="addProject">
                     <div class="form-group">
-                        <input wire:model.live="project_name" type="text" class="form-control" id="recipient-name "
+                        <input wire:model="project_name" type="text" class="form-control" id="recipient-name "
                             placeholder="Project Name">
                         <span>
                             @error('project_name')

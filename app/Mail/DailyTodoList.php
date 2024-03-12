@@ -4,6 +4,7 @@ namespace App\Mail;
 
 use App\Models\task;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -30,7 +31,7 @@ class DailyTodoList extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Daily Todo List',
+            subject:$this->user->name." -> "." Your Today's Task Summary - ".Carbon::today()->format('F j, Y'),
         );
     }
 
@@ -47,14 +48,12 @@ class DailyTodoList extends Mailable
     {
   $tasks = getTasks($this->user->id);
 
-    $count = getCount($tasks);
-    getFormetedDuedate($count['todayTasksCount']);
+    $todayTasks = getTodayTasks($tasks);
+    getFormetedDuedate($todayTasks);
 
         return $this->markdown('emails.daily_task_summary')
         ->with([
-            'completedTasksCount' => $count['completedTasksCount'],
-            'todayTasksCount' => $count['todayTasksCount'],
-            'overdueTasksCount' => $count['overdueTasksCount']
+            'todayTasks' => $todayTasks,
         ])
                     ->subject('Your Daily Task Summary')
                     ->from('taskorganizo@gmail.com', 'TaskOrganizo');

@@ -1,1 +1,0 @@
-completed{{$data['task']}}

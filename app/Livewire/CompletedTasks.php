@@ -12,7 +12,7 @@ class CompletedTasks extends Component
     #[On('taskAdded')]
     public function mount()
     {
-        $this->commanMount();
+        $this->commonMount();
     }
     public function render()
     {
@@ -25,6 +25,6 @@ class CompletedTasks extends Component
         $updatedTasks = $this->getFilteredTasks($updatedTasks);
         getFormetedDuedate($updatedTasks);
 
-        return view('livewire.completed-tasks', ['tasks' => $updatedTasks]);
+        return view('livewire.completed-tasks', ['tasks' => $updatedTasks, 'user_id' => $user->id]);
     }
 }

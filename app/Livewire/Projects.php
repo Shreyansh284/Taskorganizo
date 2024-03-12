@@ -31,14 +31,17 @@ class Projects extends Component
         if ($checkprojectAdded) {
             $this->reset(['project_name']);
             $this->dispatch('close-model');
+            session()->flash('success','Project Added');
+
         }
     }
     public function deleteProject($id)
     {
         project::where('id', $id)->delete();
-        notify()->success('Project Deleted');
-    }
 
+        session()->flash('success','Project Deleted');
+
+    }
     public function editProject($id)
     {
         $project = project::where('id', $id)->first();
@@ -47,7 +50,6 @@ class Projects extends Component
             $this->edit_project_name = $project->project_name;
         }
     }
-
     public function updateProject()
     {
         $email = session()->get('email');
@@ -56,8 +58,9 @@ class Projects extends Component
             'edit_project_name' => 'required|unique:projects,project_name,NULL,id,user_id,' . $user->id,
         ]);
         project::where('id', $this->project_id)->update(['project_name' => $this->edit_project_name]);
-        notify()->success('Project Updated');
+
         $this->dispatch('close-model');
+        session()->flash('success','Project Updated');
     }
     public function render()
     {
@@ -67,5 +70,4 @@ class Projects extends Component
 
         return view('livewire.projects')->with('projects', $projects);
     }
-
 }

@@ -9,7 +9,7 @@
                 <form method="POST" wire:submit="addLabel">
                     @csrf
                     <div class="form-group">
-                        <input wire:model.live="label_name" type="text" class="form-control" id="recipient-name "
+                        <input wire:model="label_name" type="text" class="form-control" id="recipient-name "
                             placeholder="Label Name">
                         <span>
                             @error('label_name')

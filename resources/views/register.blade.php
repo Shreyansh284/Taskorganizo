@@ -1,91 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('formMaster')
+@section('formMaster')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    @php
 
-    <title>TaskOrganizo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="reg/css/style.css">
-</head>
+    $team = request('team');
+    $teamId = request('team_id');
+    $adminName = request('adminName');
+    $adminEmail = request('adminEmail');
+    $userEmail = request('userEmail');
 
-<body>
-
-    <div class="main">
-        <section class="signup">
-            <div class="container">
-                <div class="signup-content">
-                    <div class="signup-form">
-                        <h2 class="form-title">Sign up</h2>
-                        <form method="POST" action="{{ URL::to('/') }}/users"class="register-form" id="register-form">
-                            @csrf
-
-                            <div class="form-group">
-
-                                <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="name" id="name" placeholder="Your Name"
-                                    value="{{ old('name') }}" />
-
-                            </div>
-                            <span class="text-danger">
-                                @error('name')
-                                    {{ $message }}
-                                @enderror
-                            </span>
-                            <div class="form-group">
-                                <label for="email"><i class="zmdi zmdi-email"></i></label>
-                                <input type="email" name="email" id="email" placeholder="Your Email"
-                                    value="{{ old('email') }}" />
-
-                            </div>
-                            <span class="text-danger">
-                                @error('email')
-                                    {{ $message }}
-                                @enderror
-                            </span>
-                            <div class="form-group">
-                                <label for="pass"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="password" name="password" id="pass" placeholder="Password" />
-
-                            </div>
-                            <span class="text-danger">
-                                @error('password')
-                                    {{ $message }}
-                                @enderror
-                            </span>
-                            <div class="form-group">
-                                <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
-                                <input type="password" name="password_confirmation" id="re_pass"
-                                    placeholder="Repeat your password" />
-
-                            </div>
-                            <span class="text-danger">
-                                @error('password_confirmation')
-                                    {{ $message }}
-                                @enderror
-                            </span>
+    @endphp
 
 
-                            <div class="form-group form-button">
+		<div class="wrapper">
+			<div class="inner">
+				<img src="signin/images/image-1.png" alt="" class="image-1">
+                @if(request()->is('registerByTeamInvite'))
+                <form method="POST" action="{{ URL::to('/addUserByTeamInvite') }}?team={{ $team }}&team_id={{ $teamId }}&adminName={{ $adminName }}&adminEmail={{ $adminEmail }}&userEmail={{$userEmail}}"
+                class="register-form" id="register-form">
+                 @else
+                 <form method="POST" action="{{URL::to('/users')}}"class="register-form" id="register-form">
+                @endif
+
+                    @csrf
+
+					<h3>New Account?</h3>
+					<div class="form-holder">
+                        <input type="text" class="custom-form-control" name="name" id="name" placeholder="Your Name"
+                        value="{{ old('name') }}" />
+                        <span class="fontbrown">
+                            @error('name')
+                                {{ $message }}
+                            @enderror
+                        </span>
+					</div>
+					<div class="form-holder">
+
+                        <input type="email" class="custom-form-control" name="email" id="email" placeholder="Your Email"
+                        value="@if($userEmail!=''){{$userEmail}} @endif"  @if($userEmail!='')readonly @endif />
+
+                        <span class="fontbrown">
+                            @error('email')
+                                {{ $message }}
+                            @enderror
+                        </span>
+					</div>
+					<div class="form-holder">
+
+						<input type="password" class="custom-form-control" name="password" id="pass" placeholder="Password" />
+
+                        <span class="fontbrown">
+                            @error('password')
+                                {{ $message }}
+                            @enderror
+                    </span>
+					</div>
+					<div class="form-holder">
 
 
-                                <input type="submit" name="signup" id="signup" class="form-submit" />
-                            </div>
-                        </form>
-                    </div>
-                    <div class="signup-image">
-                        <figure><img src="reg/images/signup-image.jpg" alt="sing up image"></figure>
-                        <a href="login" class="signup-image-link">I am already member</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
+                        <input type="password" class="custom-form-control" name="password_confirmation" id="re_pass"
+                        placeholder="Repeat your password" />
+                        <span class="fontbrown text-center">
+                            @error('password_confirmation')
+                                {{ $message }}
+                            @enderror
+                        </span>
+					</div>
+                    <a class="fontbrown" href="login">Already Registered ?</a>
 
-</body>
+                    <button type="submit">
+                        <span>Register</span>
+                    </button>
 
-</html>
+				</form>
+				<img src="signin/images/image-2.png" alt="" class="image-2">
+			</div>
+
+		</div>
+@endsection

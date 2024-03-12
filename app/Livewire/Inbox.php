@@ -22,7 +22,7 @@ class Inbox extends Component
     #[On('taskAdded')]
     public function mount()
     {
-        $this->commanMount();
+        $this->commonMount();
     }
     public function render()
     {
@@ -34,9 +34,7 @@ class Inbox extends Component
         $updatedTasks = collect($updatedTasks);
         getFormetedDuedate($updatedTasks);
         $updatedTasks = $this->getFilteredTasks($updatedTasks);
-
-
-        return view('livewire.inbox', ['tasks' => $updatedTasks]);
+        return view('livewire.inbox', ['tasks' => $updatedTasks, 'user_id' => $user->id]);
     }
 
 

@@ -24,7 +24,7 @@ class logincontroller extends Controller
     public function logout()
     {
         session()->forget('email');
-        notify()->success('Logged Out Successfully');
+        session()->flash('success','Logged Out Successfully');
         return redirect('login');
     }
 
@@ -44,20 +44,20 @@ class logincontroller extends Controller
     {
         if($user == null)
         {
+            session()->flash('error','INVALID USER');
             notify()->error('INVALID USER');
             return false;
         }
 
         if($this->checkPassword($requestLogin,$user))
         {
-            notify()->success('Logged In Successfully');
+            session()->flash('success','Logged In Successfully');
             return true;
         }
         else
         {
-            notify()->error('INVALID PASSWORD');
-
-            return false;
+            session()->flash('error','INVALID PASSWORD');
+                return false;
         }
     }
     private function checkPassword($requestLogin,$user)

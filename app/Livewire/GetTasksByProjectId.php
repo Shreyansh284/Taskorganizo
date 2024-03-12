@@ -14,13 +14,14 @@ class GetTasksByProjectId extends Component
     public $project_id;
     public function mount($project_id)
     {
-        $this->commanMount();
+        $this->commonMount();
         $this->project_id = $project_id;
     }
+    #[On('taskAdded')]
     public function render()
     {
         $user = getUserByEmail(session()->get('email'));
-
+        $project = getProjectByProjectId($this->project_id);
         $tasks = getTasksByProjectId($user->id, $this->project_id);
         $updatedTasks = getUpdatedTasks($tasks);
         $updatedTasks = collect($updatedTasks);
@@ -28,6 +29,6 @@ class GetTasksByProjectId extends Component
         $updatedTasks = $this->getFilteredTasks($updatedTasks);
         getFormetedDuedate($updatedTasks);
 
-        return view('livewire.get-tasks-by-project-id')->with('tasks', $updatedTasks);
+        return view('livewire.get-tasks-by-project-id', ['tasks' => $updatedTasks, 'user_id' => $user->id, 'project' => $project]);
     }
 }

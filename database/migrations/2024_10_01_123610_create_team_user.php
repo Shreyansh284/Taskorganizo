@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('team_id');
             $table->unsignedBigInteger('user_id');
+            $table->enum('status', ['Accepted', 'Pending'])->default('Pending');
             $table->foreign('team_id')
             ->references('id')->on('teams')->onDelete('cascade');
             $table->foreign('user_id')
@@ -22,6 +23,7 @@ return new class extends Migration
             $table->timestamps();
         });
     }
+
     /**
      * Reverse the migrations.
      */

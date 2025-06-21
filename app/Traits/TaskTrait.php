@@ -103,7 +103,15 @@ trait TaskTrait
         if ($task) {
             $task->completed = !$task->completed;
             $task->save();
-            session()->flash('success','Task Completed');
+
+            if($task->completed==1)
+            {
+                session()->flash('success','Task Completed');
+            }
+            if($task->completed==0)
+            {
+                session()->flash('success','Task Redo');
+            }
 
         }
     }

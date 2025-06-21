@@ -1,4 +1,5 @@
 <?php
+use App\Livewire\Calender;
 use App\Livewire\CalenderView;
 use App\Livewire\Chart;
 use App\Livewire\CompletedTasks;
@@ -48,6 +49,7 @@ Route::middleware(['login'])->group(function () {
     Route::get('inbox', Inbox::class);
     Route::get('today', TodayTasks::class);
     Route::get('calender-view', CalenderView::class);
+    Route::get('calender', Calender::class);
     Route::get('labels', Labels::class);
     Route::get('projects', Projects::class);
     Route::get('completed', CompletedTasks::class);

@@ -63,6 +63,7 @@ class Teams extends Component
         $user = getUserByEmail( session()->get('email'));
 
         $allTeams=user::find($user->id)->usersTeams;
+        // dd($allTeams);
 
         $teamsCreatedByUser=$allTeams->filter(function ($team) use ($user) {
             return $team->created_by == $user->id;

@@ -1,4 +1,4 @@
-<div wire:ignore wire:poll>
+<div wire:ignore  wire:poll>
     <div class="">
         <h5 class="card-title ms-4 fontbrown  "><strong class="me-2 ">Pie Chart View :</strong> </h5>
     <canvas id="myChart" style="max-height: 42vh; max-width:100vw "></canvas>
@@ -9,7 +9,7 @@
 </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> --}}
 
 <script>
     document.addEventListener('livewire:navigated', function() {

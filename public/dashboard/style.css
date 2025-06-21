@@ -414,7 +414,41 @@ ul.side-menu.top {
     overflow-y: hidden;
     overflow-x: hidden;
 }
+.fc-toolbar-chunk,
+.fc-day-header,
+.fc-day {
+    color: #7d1612 ; /* Brown color for header and date text */
+}
+.fc .fc-daygrid-day-number,
+.fc .fc-col-header-cell-cushion{
+    color: black;
+}
 
+.fc-day-header.fc-widget-header {
+    background-color: #d28c8c !important; /* Light brown color for header background */
+}
+.fc-event, .fc-list-item {
+    background-color: #7d1612; /* Brown color */
+    border-color: #7d1612;
+    padding: 2.5px 10px;
+}
+
+.fc-day-grid-event .fc-content, .fc-day-grid-event .fc-time {
+    color: #fff; /* Text color for events in brown background */
+}
+
+.fc-day-grid-event .fc-bg {
+    background-color: #7d1612; /* Brown color for the background of the day cells with events */
+}
+.fc .fc-daygrid-more-link{
+    color: #7d1612;
+}
+.fc .fc-more-popover .fc-popover-body{
+    height: 20vh;
+    align-items: stretch;
+    justify-content: space-evenly;
+    overflow: auto;
+}
 ::-webkit-scrollbar {
     width: 5px;
     height: 5px;
@@ -450,6 +484,7 @@ ul.side-menu.top {
         flex-wrap: unset;
         transition: transform 0.2s ease, background-color 0.3s ease, box-shadow 0.3s ease;
     }
+
 
     #content {
         width: calc(100%);

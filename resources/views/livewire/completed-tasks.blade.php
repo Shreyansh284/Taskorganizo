@@ -53,7 +53,7 @@
             <div class="col-md-3">
                 <div class="card shadow border border-0">
                     <div class="card-body fontbrown  ">
-                        <strong>!! Task Not Found !!</strong>
+                        <strong>!! Task NotFound !!</strong>
                     </div>
                 </div>
             </div>

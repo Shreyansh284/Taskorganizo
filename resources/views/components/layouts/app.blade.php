@@ -10,6 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6/main.css" rel="stylesheet">
     <link rel="stylesheet" href="/reg/css/style.css">
     <link rel="stylesheet" href="/dashboard/style.css">
 
@@ -51,8 +52,8 @@
                     <span class="text  ms-2">Today</span>
                 </a>
             </li>
-            <li @class(['active' => request()->is('calender-view')])>
-                <a wire:navigate href="{{ URL::to('/') }}/calender-view">
+            <li @class(['active' => request()->is('calender')])>
+                <a wire:navigate href="{{ URL::to('/') }}/calender">
                     <i class="bi iconColor bi-calendar3  ms-2"></i>
                     <span class="text  ms-2">Calender-View</span>
                 </a>
@@ -128,7 +129,9 @@
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
     </script>
     <script data-navigate-once src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script>
+    <script data-navigate-once  src="https://cdn.jsdelivr.net/npm/fullcalendar@6"></script>
+    <script data-navigate-once src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script data-navigate-once src="{{ asset('dashboard/sidebar&modal.js') }}" defer></script>
 
     @livewireScripts()

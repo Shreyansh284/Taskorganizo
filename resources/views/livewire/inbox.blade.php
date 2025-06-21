@@ -62,7 +62,6 @@
         @endforelse
     </div>
 
-
     @include('allModals.editTaskModal')
 
 

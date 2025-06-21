@@ -97,7 +97,7 @@ class TaskAndMemberOfTeam extends Component
 
         $user = getUserByEmail(session()->get('email'));
 
-        $usersInTeam = Team::findOrFail($this->team_id)->teamUsers;
+        $usersInTeam = Team::find($this->team_id)->teamUsers;
 
         $tasks = getTasksByTeamId($this->team_id, $user->id);
         $updatedTasks = getUpdatedTasks($tasks);

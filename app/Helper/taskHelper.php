@@ -44,7 +44,7 @@ function getTaskWhereTeamIdNotNull($userId)
 {
     $tasks = getTasks($userId);
     return $tasks->filter(function ($task) {
-        return $task->team_id != null && $task->completed=="0";
+        return $task->team_id != null && $task->completed == "0";
     });
 }
 function getTasksByTeamId($team_id, $user_id)
@@ -63,11 +63,10 @@ function getTasksByTeamId($team_id, $user_id)
                     $query->where('tasks.user_id', $user_id);
                 });
         })
-        ->where('completed','0')
+        ->where('completed', '0')
         ->latest()
         ->get();
 }
-
 function getTodayTasks($tasks)
 {
     $todayTasks = $tasks->filter(function ($task) {

@@ -11,7 +11,7 @@ class team extends Model
 
     public function teamUsers()
     {
-        return $this->belongsToMany(User::class,'team_user')->withPivot('status');;
+        return $this->belongsToMany(User::class,'team_user')->withPivot('status');
     }
 
 

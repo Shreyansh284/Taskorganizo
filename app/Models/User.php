@@ -44,7 +44,7 @@ class User extends Authenticatable
 
     public function usersTeams()
     {
-        return $this->belongsToMany(team::class,'team_user')->withPivot('status');;
+        return $this->belongsToMany(team::class,'team_user')->withPivot('status');
     }
 
 }
